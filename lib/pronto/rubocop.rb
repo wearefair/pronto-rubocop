@@ -46,6 +46,10 @@ module Pronto
       path = line.patch.delta.new_file[:path]
       level = level(offence.severity.name)
 
+      # code spike for outputting offences of certain severities at end of file
+      processed_source = processed_source_for(line.patch)
+      line = level == :warning ? line : processed_source.lines.length
+
       Message.new(path, line, level, offence.message, nil, self.class)
     end
 
