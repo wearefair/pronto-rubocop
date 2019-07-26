@@ -50,6 +50,9 @@ module Pronto
       processed_source = processed_source_for(line.patch)
       line = level == :warning ? line : processed_source.lines.length
 
+      log = { msg: offence.message, path: line.patch.new_file_full_path.to_s, line: line }
+      puts log
+
       Message.new(path, line, level, offence.message, nil, self.class)
     end
 
