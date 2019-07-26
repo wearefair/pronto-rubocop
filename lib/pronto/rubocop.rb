@@ -49,7 +49,7 @@ module Pronto
       # code spike for outputting offences of certain severities at end of file
       processed_source = processed_source_for(line.patch)
       # line = level == :warning ? line : processed_source.lines.length
-      line = processed_source.lines.length
+      line = processed_source.lines.last
       log = { msg: offence.message, path: line.patch.new_file_full_path.to_s, line: line }
       puts log
 
