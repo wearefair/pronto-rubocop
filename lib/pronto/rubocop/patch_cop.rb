@@ -13,6 +13,7 @@ module Pronto
           patch
             .added_lines
             .select { |line| line.new_lineno == offence.line }
+            .reject { |line| level(offence.severity.name) == :warning }
             .map { |line| new_message(offence, line) }
         end
       end
@@ -63,6 +64,9 @@ module Pronto
         path = line.patch.delta.new_file[:path]
         level = level(offence.severity.name)
 
+        # # code spike for outputting offences of certain severities at end of file
+        line = level == :warning ? line : processed_source.lines.length
+        message = offence.message
         Message.new(path, line, level, offence.message, nil, runner.class)
       end
 
